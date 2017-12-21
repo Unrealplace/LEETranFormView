@@ -10,7 +10,24 @@
 
 @implementation ACTranformButton
 
-
+- (instancetype)initWithFrame:(CGRect)frame andButtonType:(ACButtonShape)buttonType {
+    if (self = [super initWithFrame:frame]) {
+        switch (buttonType) {
+            case ACButtonShape_Point:{
+                [self setBackgroundImage:[UIImage imageNamed:@"tranform_point"] forState:UIControlStateNormal];
+            }
+                break;
+            case ACButtonShape_Center:{
+                [self setBackgroundImage:[UIImage imageNamed:@"tranform_rect"] forState:UIControlStateNormal];
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    return self;
+}
 /**
  回调 按钮 的touch 事件
 

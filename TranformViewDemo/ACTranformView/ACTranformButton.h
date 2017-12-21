@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef NS_ENUM(NSUInteger, ACButtonShape) {
+    ACButtonShape_Point  = 0,
+    ACButtonShape_Center ,
+};
 @class ACTranformButton;
 
 @protocol ACTranformButtonMovDelegate<NSObject>
@@ -22,6 +26,6 @@
 @interface ACTranformButton : UIButton
 
 @property (nonatomic,weak)id <ACTranformButtonMovDelegate> delegate ;
-
+- (instancetype)initWithFrame:(CGRect)frame andButtonType:(ACButtonShape)buttonType;
 
 @end

@@ -7,17 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-// 回调的点的坐标
-typedef struct ACRectVetrex {
-    CGPoint L_T;
-    CGPoint R_T;
-    CGPoint L_B;
-    CGPoint R_B;
-} ACRectVetrex;
+#import "ACTranformPoint.h"
 
 @class ACTranformViewManager;
 @class ACTranformView;
-@class ACTranformPoint;
 
 @protocol ACTranformViewmanagerTouchDelegate <NSObject>
 
@@ -35,7 +28,7 @@ typedef struct ACRectVetrex {
 /**
   持有的 转换视图
  */
-@property (nonatomic,strong)ACTranformView * currentView;
+@property (nonatomic,strong,readonly)ACTranformView * currentView;
 
 
 /**
@@ -44,9 +37,5 @@ typedef struct ACRectVetrex {
  @param points 传入要画的坐标点
  */
 - (void)creatTranFormViewWithPoints:(NSArray<ACTranformPoint*>*)points;
-
-
-
-
 
 @end

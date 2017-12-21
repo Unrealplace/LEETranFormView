@@ -9,8 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface ACTranformPoint : NSObject
+typedef struct ACRectVetrex {
+    CGPoint L_T;
+    CGPoint R_T;
+    CGPoint L_B;
+    CGPoint R_B;
+} ACRectVetrex;
+// 回调的点的坐标
 
+@interface ACTranformPoint : NSObject
 
 /**
  当前点的坐标

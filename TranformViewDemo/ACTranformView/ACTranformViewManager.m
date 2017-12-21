@@ -10,6 +10,10 @@
 #import "ACTranformView.h"
 #import "ACTranformPoint.h"
 
+@interface ACTranformViewManager ()<ACTranformViewMovDelegate>
+@property (nonatomic,strong)ACTranformView * currentView;
+@end
+
 @implementation ACTranformViewManager
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -21,7 +25,20 @@
     return self;
     
 }
+- (void)creatTranFormViewWithPoints:(NSArray<ACTranformPoint *> *)points {
+    
+    ACTranformView * tranformView = [[ACTranformView alloc] initWithFrame:self.bounds andPoints:points];
+    tranformView.delegate = self;
+    self.currentView = tranformView;
+    [self addSubview:tranformView];
+    
+}
 
-
-
+- (void)tranFormViewMovingWithView:(ACTranformView*)tranformView andPoints:(ACRectVetrex)vertex {
+    
+}
+- (void)tranFormViewStopWithView:(ACTranformView*)tranformView andPoints:(ACRectVetrex)vertex {
+    
+}
+ 
 @end
