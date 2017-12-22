@@ -198,8 +198,8 @@ static inline CGFloat angleBetweenPoints(CGPoint first, CGPoint second) {
             leftPoint   = self.allPointsArray[centerIdx];//中心点的左边点
             rightPoint  = self.allPointsArray[(centerIdx+1)==4?0:(centerIdx+1)];//中心点的右边点
             // 下面兼容斜率为 0  和 斜率 为 无穷大的情况
-            newLeftPoint = CGPointMake((isKMax || isKZero)? 0:offsetCenterY / kCenterPointMov   + leftPoint.point.x + offsetCenterX, leftPoint.point.y + offsetCenterY);// 新的左边的点
-            newRightPoint= CGPointMake((isKMax || isKZero)? 0:offsetCenterY / kCenterPointMov  + rightPoint.point.x+ offsetCenterX, rightPoint.point.y + offsetCenterY);//新的右边的点
+            newLeftPoint = CGPointMake((isKMax || isKZero)? 0:(offsetCenterY / kCenterPointMov)   + leftPoint.point.x + offsetCenterX, leftPoint.point.y + offsetCenterY);// 新的左边的点
+            newRightPoint= CGPointMake((isKMax || isKZero)? 0:(offsetCenterY / kCenterPointMov)   + rightPoint.point.x+ offsetCenterX, rightPoint.point.y + offsetCenterY);//新的右边的点
             
             NSLog(@"k--->%lf----newLeft--%@----newRight--%@",kCenterPointMov,NSStringFromCGPoint(newLeftPoint),NSStringFromCGPoint(newRightPoint));
             dispatch_sync(dispatch_get_main_queue(), ^{
