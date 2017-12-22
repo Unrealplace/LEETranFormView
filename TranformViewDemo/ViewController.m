@@ -53,7 +53,7 @@
     
     self.showCenter = YES;
     
-    ACMeshVetex meshVertex =  {
+    ACMeshVertex meshVertex =  {
         pointOne,
         pointTwo,
         pointFour,
@@ -62,7 +62,7 @@
     
     [self.tranFromViewManager creatTranFormViewWithPoints:meshVertex];
     
-    [self.tranFromViewManager showTheCenterPoint:self.showCenter andPointPoint:!self.showCenter];
+//    [self.tranFromViewManager showTheCenterPoint:self.showCenter andPointPoint:!self.showCenter];
 
     
 }
@@ -116,11 +116,11 @@
     
 }
 
-- (void)touchMovWithAllPoints:(ACMeshVetex)vertex {
+- (void)touchMovWithAllPoints:(ACMeshVertex)vertex {
     NSLog(@"mov---%@--->%@",NSStringFromCGPoint(vertex.L_B),NSStringFromCGPoint(vertex.R_B));
 }
 
-- (void)touchEndWithAllPoints:(ACMeshVetex)vertex {
+- (void)touchEndWithAllPoints:(ACMeshVertex)vertex {
     NSLog(@"end---%@--->%@",NSStringFromCGPoint(vertex.L_B),NSStringFromCGPoint(vertex.R_B));
 
 }

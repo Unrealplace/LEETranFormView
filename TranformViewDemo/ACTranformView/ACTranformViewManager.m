@@ -28,7 +28,7 @@
 
  @param points 顶点坐标
  */
-- (void)creatTranFormViewWithPoints:(ACMeshVetex)meshVertex {
+- (void)creatTranFormViewWithPoints:(ACMeshVertex)meshVertex {
     
     NSMutableArray * points  = [NSMutableArray array];
     ACTranformPoint * point1 = [[ACTranformPoint alloc] init];
@@ -60,14 +60,14 @@
 }
 
 #pragma mark ACTranformViewMovDelegate 代理方法
-- (void)tranFormViewMovingWithView:(ACTranformView*)tranformView andPoints:(ACMeshVetex)vertex {
+- (void)tranFormViewMovingWithView:(ACTranformView*)tranformView andPoints:(ACMeshVertex)vertex {
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(touchMovWithAllPoints:)]) {
         [self.delegate touchMovWithAllPoints:vertex];
     }
     
 }
-- (void)tranFormViewStopWithView:(ACTranformView*)tranformView andPoints:(ACMeshVetex)vertex {
+- (void)tranFormViewStopWithView:(ACTranformView*)tranformView andPoints:(ACMeshVertex)vertex {
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(touchEndWithAllPoints:)]) {
         [self.delegate touchEndWithAllPoints:vertex];

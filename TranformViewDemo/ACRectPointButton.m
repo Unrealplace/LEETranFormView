@@ -13,7 +13,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-  
+        self.highlighted = NO;
+        self.selected    = NO;
     }
     return self;
 }

@@ -16,9 +16,9 @@
 
 @required
 
-- (void)touchMovWithAllPoints:(ACMeshVetex)vertex;
+- (void)touchMovWithAllPoints:(ACMeshVertex)vertex;
 
-- (void)touchEndWithAllPoints:(ACMeshVetex)vertex;
+- (void)touchEndWithAllPoints:(ACMeshVertex)vertex;
 
 @end
 
@@ -38,7 +38,7 @@
 
  @param meshVertex 传入要画的坐标点
  */
-- (void)creatTranFormViewWithPoints:(ACMeshVetex)meshVertex;
+- (void)creatTranFormViewWithPoints:(ACMeshVertex)meshVertex;
 
 
 /**

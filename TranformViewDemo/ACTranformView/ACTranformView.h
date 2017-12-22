@@ -13,8 +13,8 @@
 @protocol ACTranformViewMovDelegate <NSObject>
 @required
 
-- (void)tranFormViewMovingWithView:(ACTranformView*)tranformView andPoints:(ACMeshVetex)vertex;
-- (void)tranFormViewStopWithView:(ACTranformView*)tranformView andPoints:(ACMeshVetex)vertex;
+- (void)tranFormViewMovingWithView:(ACTranformView*)tranformView andPoints:(ACMeshVertex)vertex;
+- (void)tranFormViewStopWithView:(ACTranformView*)tranformView andPoints:(ACMeshVertex)vertex;
 
 @end
 @interface ACTranformView : UIView

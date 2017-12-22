@@ -15,27 +15,27 @@ const static CGFloat ACCenterButtonSize   = 45;
 #define pi 3.14159265358979323846
 #define degreesToRadian(x) (pi * x / 180.0)
 #define radiansToDegrees(x) (180.0 * x / pi)
-static inline CGFloat distanceBetweenPoints (CGPoint first, CGPoint second) {
-    CGFloat deltaX = second.x - first.x;
-    CGFloat deltaY = second.y - first.y;
-    return sqrt(deltaX*deltaX + deltaY*deltaY );
-};
+//static inline CGFloat distanceBetweenPoints (CGPoint first, CGPoint second) {
+//    CGFloat deltaX = second.x - first.x;
+//    CGFloat deltaY = second.y - first.y;
+//    return sqrt(deltaX*deltaX + deltaY*deltaY );
+//};
 static inline CGFloat angleBetweenPoints(CGPoint first, CGPoint second) {
     CGFloat height = second.y - first.y;
     CGFloat width = first.x - second.x;
     CGFloat rads = atan(height/width);
     return radiansToDegrees(rads);
 }
-static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CGPoint line2Start, CGPoint line2End) {
-    
-    CGFloat a = line1End.x - line1Start.x;
-    CGFloat b = line1End.y - line1Start.y;
-    CGFloat c = line2End.x - line2Start.x;
-    CGFloat d = line2End.y - line2Start.y;
-    CGFloat rads = acos(((a*c) + (b*d)) / ((sqrt(a*a + b*b)) * (sqrt(c*c + d*d))));
-    return radiansToDegrees(rads);
-    
-}
+//static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CGPoint line2Start, CGPoint line2End) {
+//
+//    CGFloat a = line1End.x - line1Start.x;
+//    CGFloat b = line1End.y - line1Start.y;
+//    CGFloat c = line2End.x - line2Start.x;
+//    CGFloat d = line2End.y - line2Start.y;
+//    CGFloat rads = acos(((a*c) + (b*d)) / ((sqrt(a*a + b*b)) * (sqrt(c*c + d*d))));
+//    return radiansToDegrees(rads);
+//
+//}
 @interface ACTranformView()<ACTranformButtonMovDelegate>
 @property (nonatomic, strong) UIBezierPath       *path;
 @property (nonatomic, strong) UIColor            *fillColor;
@@ -66,7 +66,7 @@ static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CG
     _lineWidth   = 2.0f;
     _path.lineCapStyle =  kCGLineCapRound;
     _path.lineJoinStyle = kCGLineJoinRound;
-    self.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor clearColor];
     
 }
 
@@ -142,6 +142,9 @@ static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CG
         [self.allCenterPointsBtnArray addObject:centerBtn];
     }
     self.allPointsArray = points.mutableCopy;
+    self.centerHidden   = NO;
+    self.pointHidden    = YES;
+    
 }
 
 // 画图的方法
@@ -175,61 +178,72 @@ static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CG
     
     if (!self.centerHidden) {
         ACTranformPoint * centerPoint = [self.allCenterPointsArray objectAtIndex:tag-100];// 获取当前的中心点
-        CGFloat  kCenterPointMov     ;
-        CGFloat  offsetCenterY       ;
-        NSInteger  centerIdx         ;
-        ACTranformPoint * leftPoint  ;
-        ACTranformPoint * rightPoint ;
-        if((point.x - centerPoint.point.x) == 0){ // 防止斜率∞情况
-            return;
-        }else{
-            if ((point.y - centerPoint.point.y) == 0) {
+       __block CGFloat  kCenterPointMov     ;
+       __block CGFloat  offsetCenterY       ;
+       __block NSInteger  centerIdx         ;
+       __block ACTranformPoint * leftPoint  ;
+       __block ACTranformPoint * rightPoint ;
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            if((point.x - centerPoint.point.x) == 0){ // 防止斜率∞情况
                 return;
-            }else {
-                kCenterPointMov      = (point.y - centerPoint.point.y) / (point.x - centerPoint.point.x);// 计算要移动的方向的斜率
-                offsetCenterY        = point.y - centerPoint.point.y;// 计算Y轴偏移量
-                centerIdx            = tag - 100;//得到中心点点index
-                leftPoint   = self.allPointsArray[centerIdx];//中心点的左边点
-                rightPoint  = self.allPointsArray[(centerIdx+1)==4?0:(centerIdx+1)];//中心点的右边点
+            }else{
+                if ((point.y - centerPoint.point.y) == 0) {
+                    return;
+                }else {
+                    kCenterPointMov      = (point.y - centerPoint.point.y) / (point.x - centerPoint.point.x);// 计算要移动的方向的斜率
+                    offsetCenterY        = point.y - centerPoint.point.y;// 计算Y轴偏移量
+                    centerIdx            = tag - 100;//得到中心点点index
+                    leftPoint   = self.allPointsArray[centerIdx];//中心点的左边点
+                    rightPoint  = self.allPointsArray[(centerIdx+1)==4?0:(centerIdx+1)];//中心点的右边点
+                }
             }
-        };
-        
-        
-        CGPoint          newLeftPoint = CGPointMake(offsetCenterY / kCenterPointMov  + leftPoint.point.x, leftPoint.point.y + offsetCenterY);// 新的左边的点
-        CGPoint          newRightPoint= CGPointMake(offsetCenterY / kCenterPointMov  + rightPoint.point.x, rightPoint.point.y + offsetCenterY);//新的右边的点
-        NSLog(@"k--->%lf----newLeft--%@----newRight--%@",kCenterPointMov,NSStringFromCGPoint(newLeftPoint),NSStringFromCGPoint(newRightPoint));
-        
-        // 下面修改数据源
-        leftPoint.point               = newLeftPoint;
-        rightPoint.point              = newRightPoint;
-        centerPoint.point             = CGPointMake((newRightPoint.x + newLeftPoint.x)/2.0f, (newRightPoint.y + newLeftPoint.y)/2.0f);
-        
-        
-        [self.allCenterPointsArray removeAllObjects];
-        for (int i = 0 ; i < [self.allPointsArray count]; i++) {
+            CGPoint          newLeftPoint = CGPointMake(offsetCenterY / kCenterPointMov  + leftPoint.point.x, leftPoint.point.y + offsetCenterY);// 新的左边的点
+            CGPoint          newRightPoint= CGPointMake(offsetCenterY / kCenterPointMov  + rightPoint.point.x, rightPoint.point.y + offsetCenterY);//新的右边的点
+            NSLog(@"k--->%lf----newLeft--%@----newRight--%@",kCenterPointMov,NSStringFromCGPoint(newLeftPoint),NSStringFromCGPoint(newRightPoint));
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                
+                
+                CGPoint detectionLeftPoint  =  [self boundaryDetectionWithPoint:newLeftPoint];
+                CGPoint detectionRightPoint =  [self boundaryDetectionWithPoint:newRightPoint];
+                
+                if([self reachBoundaryDeteactionWithPoint:detectionLeftPoint] || [self reachBoundaryDeteactionWithPoint:detectionRightPoint])return;
+                // 下面修改数据源
+                leftPoint.point               = detectionLeftPoint;
+                rightPoint.point              = detectionRightPoint;
+                centerPoint.point             = CGPointMake((detectionRightPoint.x + detectionLeftPoint.x)/2.0f, (detectionRightPoint.y + detectionLeftPoint.y)/2.0f);
+                
+                
+                [self.allCenterPointsArray removeAllObjects];
+                for (int i = 0 ; i < [self.allPointsArray count]; i++) {
+                    
+                    ACTranformPoint * prePoint    = _allPointsArray[i]; // 计算前一个点
+                    ACTranformPoint * backPoint   = _allPointsArray[(i + 1)==_allPointsArray.count?0:(i + 1)];// 计算后一个点
+                    ACTranformPoint * centerPoint = [[ACTranformPoint alloc] init]; // 计算二者中点
+                    CGFloat   rotateAngle         = angleBetweenPoints(prePoint.point, backPoint.point); //计算两个点间的斜率，用来纠正中点的按钮方向
+                    centerPoint.point             = CGPointMake((prePoint.point.x + backPoint.point.x) / 2.0f,(prePoint.point.y + backPoint.point.y) /2.0f);// 计算中点
+                    [self.allCenterPointsArray addObject:centerPoint];
+                    ACTranformButton * pointBtn   = self.allPointsBtnArray[i];
+                    pointBtn.center               = prePoint.point;
+                    
+                    ACTranformButton * oneBtn     = self.allCenterPointsBtnArray[i];
+                    oneBtn.center                 = centerPoint.point;
+                    // 给中点按钮设置旋转角度
+                    CGAffineTransform transform   = CGAffineTransformMakeRotation(-rotateAngle * M_PI / 180.0f);
+                    oneBtn.transform              = transform;
+                    
+                }
+            });
             
-            ACTranformPoint * prePoint    = _allPointsArray[i]; // 计算前一个点
-            ACTranformPoint * backPoint   = _allPointsArray[(i + 1)==_allPointsArray.count?0:(i + 1)];// 计算后一个点
-            ACTranformPoint * centerPoint = [[ACTranformPoint alloc] init]; // 计算二者中点
-            CGFloat   rotateAngle         = angleBetweenPoints(prePoint.point, backPoint.point); //计算两个点间的斜率，用来纠正中点的按钮方向
-            centerPoint.point             = CGPointMake((prePoint.point.x + backPoint.point.x) / 2.0f,(prePoint.point.y + backPoint.point.y) /2.0f);// 计算中点
-            [self.allCenterPointsArray addObject:centerPoint];
-            ACTranformButton * pointBtn   = self.allPointsBtnArray[i];
-            pointBtn.center               = prePoint.point;
             
-            ACTranformButton * oneBtn     = self.allCenterPointsBtnArray[i];
-            oneBtn.center                 = centerPoint.point;
-            // 给中点按钮设置旋转角度
-            CGAffineTransform transform   = CGAffineTransformMakeRotation(-rotateAngle * M_PI / 180.0f);
-            oneBtn.transform              = transform;
-            
-        }
+        });
+       
     }
     
     if (!self.pointHidden) { //判断这个点是否超出了父视图的view 范围内
         ACTranformPoint * btnPoint = [self.allPointsArray objectAtIndex:tag];
-        btnPoint.point = [self boundaryDetectionWithPoint:point];
-        [tranformBtn setCenter:point];
+        CGPoint newPoint = [self boundaryDetectionWithPoint:point];
+        btnPoint.point = newPoint;
+        [tranformBtn setCenter:newPoint];
         [self.allCenterPointsArray removeAllObjects];
         for (int i = 0 ; i < [self.allPointsArray count]; i++) {
             
@@ -250,7 +264,7 @@ static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CG
     }
     
     [self setNeedsDisplay];
-    ACMeshVetex vertex = {
+    ACMeshVertex vertex = {
         [_allPointsArray[0] point],
         [_allPointsArray[1] point],
         [_allPointsArray[3] point],
@@ -266,6 +280,20 @@ static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CG
 
 
 /**
+ 检测是否到达边界
+
+ @param point 要检测的坐标点
+ @return 是否到达边界
+ */
+- (BOOL)reachBoundaryDeteactionWithPoint:(CGPoint)point {
+    BOOL reach = NO;
+    if (point.y >= self.bounds.size.height)reach=YES;
+    if (point.x >= self.bounds.size.width )reach=YES;
+    if (point.y <= 0)reach=YES;
+    if (point.x <= 0)reach=YES;
+    return reach;
+}
+/**
  顶点边界检测
 
  @param point 要检测的点
@@ -274,13 +302,13 @@ static inline CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CG
 - (CGPoint)boundaryDetectionWithPoint:(CGPoint)point{
     if (point.y >= self.bounds.size.height)point.y  = self.bounds.size.height;
     if (point.x >= self.bounds.size.width )point.x  =  self.bounds.size.width;
-    if (point.y <= 0) point.y = 0;
-    if (point.x <= 0) point.x = 0;
+    if (point.y <= 0)point.y = 0;
+    if (point.x <= 0)point.x = 0;
     return CGPointMake(point.x, point.y);
 }
 - (void)touchEndButton:(ACTranformButton *)tranformBtn withBtnTag:(NSInteger)tag andBtnPoint:(CGPoint)point{
     
-    ACMeshVetex vertex = {
+    ACMeshVertex vertex = {
         [_allPointsArray[0] point],
         [_allPointsArray[1] point],
         [_allPointsArray[3] point],

@@ -25,6 +25,8 @@
             default:
                 break;
         }
+        self.highlighted = NO;
+        self.selected    = NO;
     }
     return self;
 }
@@ -33,7 +35,12 @@
 
  @param touches 事件集和
  */
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    self.highlighted = NO;
+    self.selected    = NO;
+}
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
     UITouch *touch = [touches.allObjects lastObject];
     if (self.delegate && [self.delegate respondsToSelector:@selector(touchMovButton:withBtnTag:andBtnPoint:)]) {
         [self.delegate touchMovButton:self withBtnTag:self.tag andBtnPoint:[touch locationInView:self.superview]];
