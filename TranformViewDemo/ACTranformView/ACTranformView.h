@@ -13,13 +13,19 @@
 @protocol ACTranformViewMovDelegate <NSObject>
 @required
 
-- (void)tranFormViewMovingWithView:(ACTranformView*)tranformView andPoints:(ACRectVetrex)vertex;
-- (void)tranFormViewStopWithView:(ACTranformView*)tranformView andPoints:(ACRectVetrex)vertex;
+- (void)tranFormViewMovingWithView:(ACTranformView*)tranformView andPoints:(ACMeshVetex)vertex;
+- (void)tranFormViewStopWithView:(ACTranformView*)tranformView andPoints:(ACMeshVetex)vertex;
 
 @end
 @interface ACTranformView : UIView
 
 @property (nonatomic, weak) id <ACTranformViewMovDelegate> delegate ;
+
+
+@property (nonatomic,assign)BOOL centerHidden;
+
+@property (nonatomic,assign)BOOL pointHidden;
+
 
 /**
  以定点初始化变形时图
@@ -29,6 +35,7 @@
  @return 对象
  */
 - (instancetype)initWithFrame:(CGRect)frame andPoints:(NSArray<ACTranformPoint*>*)points;
+
 
 
 @end

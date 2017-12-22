@@ -14,9 +14,11 @@
 
 @protocol ACTranformViewmanagerTouchDelegate <NSObject>
 
-- (void)touchMovWith:(ACTranformViewManager*)viewManager andAllPoints:(ACRectVetrex)vexterx;
+@required
 
-- (void)touchEndWith:(ACTranformViewManager *)viewManager andAllPoints:(ACRectVetrex)vexterx;
+- (void)touchMovWithAllPoints:(ACMeshVetex)vertex;
+
+- (void)touchEndWithAllPoints:(ACMeshVetex)vertex;
 
 @end
 
@@ -28,14 +30,23 @@
 /**
   持有的 转换视图
  */
-@property (nonatomic,strong,readonly)ACTranformView * currentView;
+@property (nonatomic,strong)ACTranformView * currentView;
 
 
 /**
  初始化变形视图
 
- @param points 传入要画的坐标点
+ @param meshVertex 传入要画的坐标点
  */
-- (void)creatTranFormViewWithPoints:(NSArray<ACTranformPoint*>*)points;
+- (void)creatTranFormViewWithPoints:(ACMeshVetex)meshVertex;
+
+
+/**
+ 控制中点和顶点的显示 隐藏
+
+ @param isCenterHidden 中点
+ @param isPointHidden 顶点
+ */
+- (void)showTheCenterPoint:(BOOL)isCenterHidden andPointPoint:(BOOL)isPointHidden;
 
 @end

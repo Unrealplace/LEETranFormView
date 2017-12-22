@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef struct ACRectVetrex {
+typedef struct ACMeshVetex {
     CGPoint L_T;
     CGPoint R_T;
     CGPoint L_B;
     CGPoint R_B;
-} ACRectVetrex;
+} ACMeshVetex;
 // 回调的点的坐标
 
 @interface ACTranformPoint : NSObject

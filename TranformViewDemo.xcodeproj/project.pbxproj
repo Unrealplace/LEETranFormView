@@ -90,6 +90,14 @@
 		2B3F8F7C1FEBB1F2001B689E /* TranformViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				2B3F8F941FEBB1FD001B689E /* ACRectPoint.h */,
+				2B3F8F951FEBB1FD001B689E /* ACRectPoint.m */,
+				2B3F8F961FEBB1FD001B689E /* ACRectPointButton.h */,
+				2B3F8F971FEBB1FD001B689E /* ACRectPointButton.m */,
+				2B3F8F981FEBB1FD001B689E /* ACRectView.h */,
+				2B3F8F991FEBB1FD001B689E /* ACRectView.m */,
+				2B3F8F9A1FEBB1FD001B689E /* ACRectViewsManager.h */,
+				2B3F8F9D1FEBB1FD001B689E /* ADRectViewsManager.m */,
 				2B3F8F931FEBB1FD001B689E /* ACTranformView */,
 				2B3F8F7D1FEBB1F2001B689E /* AppDelegate.h */,
 				2B3F8F7E1FEBB1F2001B689E /* AppDelegate.m */,
@@ -116,14 +124,6 @@
 				2B3F8FB51FEBD559001B689E /* ACTranformViewManager.h */,
 				2B3F8FB61FEBD559001B689E /* ACTranformViewManager.m */,
 				2B3F8F9E1FEBB254001B689E /* Resources */,
-				2B3F8F941FEBB1FD001B689E /* ACRectPoint.h */,
-				2B3F8F951FEBB1FD001B689E /* ACRectPoint.m */,
-				2B3F8F961FEBB1FD001B689E /* ACRectPointButton.h */,
-				2B3F8F971FEBB1FD001B689E /* ACRectPointButton.m */,
-				2B3F8F981FEBB1FD001B689E /* ACRectView.h */,
-				2B3F8F991FEBB1FD001B689E /* ACRectView.m */,
-				2B3F8F9A1FEBB1FD001B689E /* ACRectViewsManager.h */,
-				2B3F8F9D1FEBB1FD001B689E /* ADRectViewsManager.m */,
 			);
 			path = ACTranformView;
 			sourceTree = "<group>";

@@ -17,6 +17,7 @@
 
 @property  (nonatomic,strong)UIImageView * showImageView;
 
+@property  (nonatomic,assign)BOOL showCenter;
 
 @end
 
@@ -29,15 +30,12 @@
 //    [self.view addSubview:self.viewManager];
     [self.view addSubview:self.tranFromViewManager];
     
-}
-
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     //test date
-    CGPoint pointOne = CGPointMake(self.showImageView.frame.origin.x, self.showImageView.frame.origin.y);
-    CGPoint pointTwo = CGPointMake(self.showImageView.frame.origin.x+self.showImageView.frame.size.width, self.showImageView.frame.origin.y-20);
-    CGPoint pointThree = CGPointMake( self.showImageView.frame.origin.x +self.showImageView.frame.size.width-6, self.showImageView.frame.origin.y+self.showImageView.frame.size.height);
-    CGPoint pointFour = CGPointMake(self.showImageView.frame.origin.x + 40 , self.showImageView.frame.origin.y+self.showImageView.frame.size.height + 60);
+    CGPoint pointOne = CGPointMake(self.showImageView.frame.origin.x-40, self.showImageView.frame.origin.y-30);
+    CGPoint pointTwo = CGPointMake(self.showImageView.frame.origin.x+self.showImageView.frame.size.width, self.showImageView.frame.origin.y);
+    CGPoint pointThree = CGPointMake( self.showImageView.frame.origin.x +self.showImageView.frame.size.width, self.showImageView.frame.origin.y+self.showImageView.frame.size.height);
+    CGPoint pointFour = CGPointMake(self.showImageView.frame.origin.x  , self.showImageView.frame.origin.y+self.showImageView.frame.size.height);
     
     ACRectPoint *rectPoint1  = [ACRectViewsManager createACRectPointWithPoint:pointOne];
     rectPoint1.pointId = 0;
@@ -48,29 +46,32 @@
     ACRectPoint *rectPoint4 = [ACRectViewsManager createACRectPointWithPoint:pointFour];
     rectPoint4.pointId = 3;
     
-//    NSArray *pointArray = @[rectPoint1,rectPoint2,rectPoint3,rectPoint4];
-//    [self.viewManager createRectViewWithPoints:pointArray];
+    //    NSArray *pointArray = @[rectPoint1,rectPoint2,rectPoint3,rectPoint4];
+    //    [self.viewManager createRectViewWithPoints:pointArray];
     
     
-    ACTranformPoint * point1 = [[ACTranformPoint alloc] init];
-    ACTranformPoint * point2 = [[ACTranformPoint alloc] init];
-    ACTranformPoint * point3 = [[ACTranformPoint alloc] init];
-    ACTranformPoint * point4 = [[ACTranformPoint alloc] init];
+    
+    self.showCenter = YES;
+    
+    ACMeshVetex meshVertex =  {
+        pointOne,
+        pointTwo,
+        pointFour,
+        pointThree,
+    };
+    
+    [self.tranFromViewManager creatTranFormViewWithPoints:meshVertex];
+    
+    [self.tranFromViewManager showTheCenterPoint:self.showCenter andPointPoint:!self.showCenter];
 
-    point1.point = pointOne;
-    point2.point = pointTwo;
-    point3.point = pointThree;
-    point4.point = pointFour;
-    point1.pointId = 0;
-    point2.pointId = 1;
-    point3.pointId = 2;
-    point4.pointId = 3;
+    
+}
 
-    NSArray * tranformPointArray = @[point1,point2,point3,point4];
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
-    [self.tranFromViewManager creatTranFormViewWithPoints:tranformPointArray];
-    
-    
+    self.showCenter = !self.showCenter;
+    [self.tranFromViewManager showTheCenterPoint:self.showCenter andPointPoint:!self.showCenter];
+
 }
 
 
@@ -115,15 +116,14 @@
     
 }
 
-- (void)touchMovWith:(ACTranformViewManager*)viewManager andAllPoints:(ACRectVetrex)vexterx {
-    
-    
+- (void)touchMovWithAllPoints:(ACMeshVetex)vertex {
+    NSLog(@"mov---%@--->%@",NSStringFromCGPoint(vertex.L_B),NSStringFromCGPoint(vertex.R_B));
 }
 
-- (void)touchEndWith:(ACTranformViewManager *)viewManager andAllPoints:(ACRectVetrex)vexterx {
-    
+- (void)touchEndWithAllPoints:(ACMeshVetex)vertex {
+    NSLog(@"end---%@--->%@",NSStringFromCGPoint(vertex.L_B),NSStringFromCGPoint(vertex.R_B));
+
 }
-
-
+ 
 @end
 
