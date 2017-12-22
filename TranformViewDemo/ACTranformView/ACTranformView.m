@@ -179,33 +179,34 @@ static inline CGFloat angleBetweenPoints(CGPoint first, CGPoint second) {
     if (!self.centerHidden) {
         ACTranformPoint * centerPoint = [self.allCenterPointsArray objectAtIndex:tag-100];// 获取当前的中心点
        __block CGFloat  kCenterPointMov     ;
-       __block CGFloat  offsetCenterY       ;
+       __block CGFloat  offsetCenterY   =0  ;
+       __block CGFloat  offsetCenterX   =0  ;
        __block NSInteger  centerIdx         ;
        __block ACTranformPoint * leftPoint  ;
        __block ACTranformPoint * rightPoint ;
+       __block CGPoint          newLeftPoint;
+       __block CGPoint          newRightPoint;
+       __block BOOL isKMax                  = NO;
+       __block BOOL isKZero                 = NO;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            if((point.x - centerPoint.point.x) == 0){ // 防止斜率∞情况
-                return;
-            }else{
-                if ((point.y - centerPoint.point.y) == 0) {
-                    return;
-                }else {
-                    kCenterPointMov      = (point.y - centerPoint.point.y) / (point.x - centerPoint.point.x);// 计算要移动的方向的斜率
-                    offsetCenterY        = point.y - centerPoint.point.y;// 计算Y轴偏移量
-                    centerIdx            = tag - 100;//得到中心点点index
-                    leftPoint   = self.allPointsArray[centerIdx];//中心点的左边点
-                    rightPoint  = self.allPointsArray[(centerIdx+1)==4?0:(centerIdx+1)];//中心点的右边点
-                }
-            }
-            CGPoint          newLeftPoint = CGPointMake(offsetCenterY / kCenterPointMov  + leftPoint.point.x, leftPoint.point.y + offsetCenterY);// 新的左边的点
-            CGPoint          newRightPoint= CGPointMake(offsetCenterY / kCenterPointMov  + rightPoint.point.x, rightPoint.point.y + offsetCenterY);//新的右边的点
+            
+            if((point.x - centerPoint.point.x) == 0)isKMax  = YES;
+            if((point.y - centerPoint.point.y) == 0)isKZero = YES;
+            kCenterPointMov      = (point.y - centerPoint.point.y) / (point.x - centerPoint.point.x);// 计算要移动的方向的斜率
+            offsetCenterY        = point.y - centerPoint.point.y;// 计算Y轴偏移量
+            centerIdx            = tag - 100;//得到中心点点index
+            leftPoint   = self.allPointsArray[centerIdx];//中心点的左边点
+            rightPoint  = self.allPointsArray[(centerIdx+1)==4?0:(centerIdx+1)];//中心点的右边点
+            // 下面兼容斜率为 0  和 斜率 为 无穷大的情况
+            newLeftPoint = CGPointMake((isKMax || isKZero)? 0:offsetCenterY / kCenterPointMov   + leftPoint.point.x + offsetCenterX, leftPoint.point.y + offsetCenterY);// 新的左边的点
+            newRightPoint= CGPointMake((isKMax || isKZero)? 0:offsetCenterY / kCenterPointMov  + rightPoint.point.x+ offsetCenterX, rightPoint.point.y + offsetCenterY);//新的右边的点
+            
             NSLog(@"k--->%lf----newLeft--%@----newRight--%@",kCenterPointMov,NSStringFromCGPoint(newLeftPoint),NSStringFromCGPoint(newRightPoint));
             dispatch_sync(dispatch_get_main_queue(), ^{
                 
                 
                 CGPoint detectionLeftPoint  =  [self boundaryDetectionWithPoint:newLeftPoint];
                 CGPoint detectionRightPoint =  [self boundaryDetectionWithPoint:newRightPoint];
-                
                 if([self reachBoundaryDeteactionWithPoint:detectionLeftPoint] || [self reachBoundaryDeteactionWithPoint:detectionRightPoint])return;
                 // 下面修改数据源
                 leftPoint.point               = detectionLeftPoint;
@@ -224,7 +225,6 @@ static inline CGFloat angleBetweenPoints(CGPoint first, CGPoint second) {
                     [self.allCenterPointsArray addObject:centerPoint];
                     ACTranformButton * pointBtn   = self.allPointsBtnArray[i];
                     pointBtn.center               = prePoint.point;
-                    
                     ACTranformButton * oneBtn     = self.allCenterPointsBtnArray[i];
                     oneBtn.center                 = centerPoint.point;
                     // 给中点按钮设置旋转角度
