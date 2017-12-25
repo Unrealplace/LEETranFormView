@@ -186,10 +186,7 @@ static inline CGFloat angleBetweenPoints(CGPoint first, CGPoint second) {
        __block ACTranformPoint * rightPoint ;
        __block CGPoint          newLeftPoint;
        __block CGPoint          newRightPoint;
-       __block BOOL isKMax                  = NO;
-       __block BOOL isKZero                 = NO;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            
             
             if((point.x - centerPoint.point.x) == 0){ // 防止斜率∞情况
                 offsetCenterY        = point.y - centerPoint.point.y;// 计算Y轴偏移量
@@ -220,11 +217,11 @@ static inline CGFloat angleBetweenPoints(CGPoint first, CGPoint second) {
                     newRightPoint= CGPointMake(offsetCenterY / kCenterPointMov  + rightPoint.point.x, rightPoint.point.y + offsetCenterY);//新的右边的点
                 }
             }
+
+            
             
             NSLog(@"k--->%lf----newLeft--%@----newRight--%@",kCenterPointMov,NSStringFromCGPoint(newLeftPoint),NSStringFromCGPoint(newRightPoint));
             dispatch_sync(dispatch_get_main_queue(), ^{
-                
-                
                 CGPoint detectionLeftPoint  =  [self boundaryDetectionWithPoint:newLeftPoint];
                 CGPoint detectionRightPoint =  [self boundaryDetectionWithPoint:newRightPoint];
                 
