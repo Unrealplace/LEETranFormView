@@ -46,6 +46,12 @@
         [self.delegate touchMovButton:self withBtnTag:self.tag andBtnPoint:[touch locationInView:self.superview]];
     }
 }
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [touches.allObjects lastObject];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(touchEndButton:withBtnTag:andBtnPoint:)]) {
+        [self.delegate touchEndButton:self withBtnTag:self.tag andBtnPoint:[touch locationInView:self.superview]];
+    }
+}
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches.allObjects lastObject];
     if (self.delegate && [self.delegate respondsToSelector:@selector(touchEndButton:withBtnTag:andBtnPoint:)]) {

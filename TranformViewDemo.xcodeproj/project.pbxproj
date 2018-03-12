@@ -25,6 +25,9 @@
 		2B3F8FB11FEBD278001B689E /* ACTranformButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3F8FB01FEBD278001B689E /* ACTranformButton.m */; };
 		2B3F8FB41FEBD540001B689E /* ACTranformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3F8FB31FEBD540001B689E /* ACTranformView.m */; };
 		2B3F8FB71FEBD559001B689E /* ACTranformViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B3F8FB61FEBD559001B689E /* ACTranformViewManager.m */; };
+		2BF364BA2052834200F6266A /* ACRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF364B92052834200F6266A /* ACRulerView.m */; };
+		2BF364C02052859100F6266A /* ACRulerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF364BF2052859100F6266A /* ACRulerScrollView.m */; };
+		2BF364C3205285AB00F6266A /* ACRulerShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF364C2205285AB00F6266A /* ACRulerShowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,12 @@
 		2B3F8FB31FEBD540001B689E /* ACTranformView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACTranformView.m; sourceTree = "<group>"; };
 		2B3F8FB51FEBD559001B689E /* ACTranformViewManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACTranformViewManager.h; sourceTree = "<group>"; };
 		2B3F8FB61FEBD559001B689E /* ACTranformViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACTranformViewManager.m; sourceTree = "<group>"; };
+		2BF364B82052834200F6266A /* ACRulerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRulerView.h; sourceTree = "<group>"; };
+		2BF364B92052834200F6266A /* ACRulerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRulerView.m; sourceTree = "<group>"; };
+		2BF364BE2052859100F6266A /* ACRulerScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRulerScrollView.h; sourceTree = "<group>"; };
+		2BF364BF2052859100F6266A /* ACRulerScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRulerScrollView.m; sourceTree = "<group>"; };
+		2BF364C1205285AB00F6266A /* ACRulerShowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACRulerShowView.h; sourceTree = "<group>"; };
+		2BF364C2205285AB00F6266A /* ACRulerShowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACRulerShowView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +99,7 @@
 		2B3F8F7C1FEBB1F2001B689E /* TranformViewDemo */ = {
 			isa = PBXGroup;
 			children = (
+				2BF364B72052832500F6266A /* ACRulerView */,
 				2B3F8F941FEBB1FD001B689E /* ACRectPoint.h */,
 				2B3F8F951FEBB1FD001B689E /* ACRectPoint.m */,
 				2B3F8F961FEBB1FD001B689E /* ACRectPointButton.h */,
@@ -137,6 +147,19 @@
 				2B3F8FA01FEBB267001B689E /* tranform_point@2x.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		2BF364B72052832500F6266A /* ACRulerView */ = {
+			isa = PBXGroup;
+			children = (
+				2BF364B82052834200F6266A /* ACRulerView.h */,
+				2BF364B92052834200F6266A /* ACRulerView.m */,
+				2BF364C1205285AB00F6266A /* ACRulerShowView.h */,
+				2BF364C2205285AB00F6266A /* ACRulerShowView.m */,
+				2BF364BE2052859100F6266A /* ACRulerScrollView.h */,
+				2BF364BF2052859100F6266A /* ACRulerScrollView.m */,
+			);
+			path = ACRulerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,7 +246,10 @@
 				2B3F8FA71FEBB31C001B689E /* ADRectViewsManager.m in Sources */,
 				2B3F8FB11FEBD278001B689E /* ACTranformButton.m in Sources */,
 				2B3F8F821FEBB1F2001B689E /* ViewController.m in Sources */,
+				2BF364BA2052834200F6266A /* ACRulerView.m in Sources */,
 				2B3F8F8D1FEBB1F3001B689E /* main.m in Sources */,
+				2BF364C02052859100F6266A /* ACRulerScrollView.m in Sources */,
+				2BF364C3205285AB00F6266A /* ACRulerShowView.m in Sources */,
 				2B3F8F7F1FEBB1F2001B689E /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

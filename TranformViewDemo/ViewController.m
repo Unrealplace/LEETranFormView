@@ -9,13 +9,17 @@
 #import "ViewController.h"
 #import "ACRectViewsManager.h"
 #import "ACTranformViewManager.h"
-@interface ViewController ()<ACRectViewsManagerDelegate,ACTranformViewmanagerTouchDelegate>
+#import "ACRulerView.h"
+
+@interface ViewController ()<ACRectViewsManagerDelegate,ACTranformViewmanagerTouchDelegate,ACRulerViewRotateDelegate>
 
 @property (nonatomic,strong)ACRectViewsManager * viewManager;
 
 @property (nonatomic, strong) ACTranformViewManager    *tranFromViewManager;
 
 @property  (nonatomic,strong)UIImageView * showImageView;
+
+@property (nonatomic,strong)ACRulerView * rulerView;
 
 @property  (nonatomic,assign)BOOL showCenter;
 
@@ -26,9 +30,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.view addSubview:self.showImageView];
-//    [self.view addSubview:self.viewManager];
-    [self.view addSubview:self.tranFromViewManager];
+//    [self.view addSubview:self.showImageView];
+////    [self.view addSubview:self.viewManager];
+//    [self.view addSubview:self.tranFromViewManager];
     
     
     //test date
@@ -51,7 +55,7 @@
     
     
     
-    self.showCenter = YES;
+    self.showCenter = NO;
     
     ACMeshVertex meshVertex =  {
         pointOne,
@@ -60,12 +64,44 @@
         pointThree,
     };
     
-    [self.tranFromViewManager creatTranFormViewWithPoints:meshVertex];
+//    [self.tranFromViewManager creatTranFormViewWithPoints:meshVertex];
     
 //    [self.tranFromViewManager showTheCenterPoint:self.showCenter andPointPoint:!self.showCenter];
 
     
+    self.view.backgroundColor = [UIColor blackColor];
+    
+    self.rulerView = [[ACRulerView alloc] initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, 80) target:self ];
+    
+    [self.view addSubview:self.rulerView];
+    
+    [self.rulerView reloadData];
+    
+    UIButton * btn = [UIButton new];
+    btn.frame = CGRectMake(0, CGRectGetMaxY(self.rulerView.frame), 100, 100);
+    [self.view addSubview:btn];
+    btn.backgroundColor = [UIColor blueColor];
+    [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
 }
+- (void)btnClick:(id)sender {
+    [self.rulerView reSet];
+}
+
+- (int)rulerCount {
+    return 60;
+}
+
+- (int)rulerSignalDegreeCount {
+    return 5;
+}
+- (void)rulerViewRotateWithDegree:(int)degree {
+    
+    NSLog(@"%d",degree);
+    
+}
+
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
