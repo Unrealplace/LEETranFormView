@@ -25,7 +25,7 @@
         self.delegate = delegate;
         [self addSubview:self.degreeLabel];
         [self addSubview:self.rulerShowView];
-        [self addSubview:self.currentPointView];
+//        [self addSubview:self.currentPointView];
     }
     return self;
 }
@@ -34,9 +34,9 @@
 - (void)layoutSubviews {
     
     self.degreeLabel.center = CGPointMake(self.bounds.size.width/2.0f, self.degreeLabel.center.y);
-    self.rulerShowView.frame = CGRectMake(0, CGRectGetMaxY(self.degreeLabel.frame), self.bounds.size.width, self.bounds.size.height - 36);
-    self.currentPointView.frame = CGRectMake(0, CGRectGetMaxY(self.rulerShowView.frame)+10, 6, 6);
-    self.currentPointView.center = CGPointMake(self.bounds.size.width/2.0f, self.currentPointView.center.y);
+    self.rulerShowView.frame = CGRectMake(0, CGRectGetMaxY(self.degreeLabel.frame), self.bounds.size.width, self.bounds.size.height - self.degreeLabel.bounds.size.height);
+//    self.currentPointView.frame = CGRectMake(0, CGRectGetMaxY(self.rulerShowView.frame)+10, 6, 6);
+//    self.currentPointView.center = CGPointMake(self.bounds.size.width/2.0f, self.currentPointView.center.y);
     
 }
 

@@ -71,7 +71,7 @@
     
     self.view.backgroundColor = [UIColor blackColor];
     
-    self.rulerView = [[ACRulerView alloc] initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, 80) target:self ];
+    self.rulerView = [[ACRulerView alloc] initWithFrame:CGRectMake(0, 100, self.view.bounds.size.width, 60) target:self ];
     
     [self.view addSubview:self.rulerView];
     
